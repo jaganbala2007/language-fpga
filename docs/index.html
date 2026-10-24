@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FPGA Multilingual AI Receptionist | 100% Offline Voice-to-Voice AI</title>
+  <meta name="description" content="Hardware-accelerated multilingual voice receptionist powered by Xilinx PYNQ-Z2 FPGA with English, Hindi, and Tamil real-time speech classification and 100% offline agent reasoning.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #ff6b35;
+      --primary-glow: rgba(255, 107, 53, 0.4);
+      --accent-cyan: #00f2fe;
+      --cyan-glow: rgba(0, 242, 254, 0.35);
+      --accent-green: #10b981;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 107, 53, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(0, 242, 254, 0.1) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 60%);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Top Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 9, 14, 0.85);
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 2rem;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, #ff6b35, #f7931a);
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-github:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 15px var(--cyan-glow);
+      color: #fff;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 3rem 0 4rem;
+      position: relative;
+    }
+
+    .badge-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 107, 53, 0.1);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ff9166;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffffff 40%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 span.gradient-highlight {
+      background: linear-gradient(135deg, #ff6b35, #00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 760px;
+      margin: 0 auto 2.5rem;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+    }
+
+    /* Interactive Voice Orb */
+    .voice-orb-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orb-pulse {
+      position: absolute;
+      inset: -15px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--cyan-glow) 0%, transparent 70%);
+      animation: pulseAnimation 3s infinite ease-in-out;
+    }
+
+    .orb-core {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #00f2fe, #ff6b35 75%);
+      box-shadow: 0 0 35px var(--cyan-glow), inset 0 0 20px rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .orb-core:hover {
+      transform: scale(1.08);
+    }
+
+    .orb-icon {
+      font-size: 2.2rem;
+    }
+
+    @keyframes pulseAnimation {
+      0%, 100% { transform: scale(0.9); opacity: 0.5; }
+      50% { transform: scale(1.25); opacity: 0.9; }
+    }
+
+    /* Metrics Bar */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 107, 53, 0.4);
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .stat-value.accent-cyan { color: var(--accent-cyan); }
+    .stat-value.accent-orange { color: var(--primary); }
+    .stat-value.accent-green { color: var(--accent-green); }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* Interactive Demo Section */
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 860px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .panel-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sample-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .sample-item:hover, .sample-item.active {
+      border-color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.05);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+    }
+
+    .sample-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .sample-lang {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    .lang-en { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .lang-hi { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .lang-ta { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+
+    .sample-text {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+    }
+
+    .audio-player-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    audio {
+      width: 100%;
+      height: 34px;
+      border-radius: 6px;
+      filter: invert(0.9) hue-rotate(180deg);
+    }
+
+    /* Simulation Output Display */
+    .telemetry-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
+    }
+
+    .telemetry-row:last-child {
+      border-bottom: none;
+    }
+
+    .telemetry-key { color: var(--text-muted); }
+    .telemetry-val { color: var(--accent-cyan); font-weight: 600; }
+    .telemetry-val.highlight-green { color: var(--accent-green); }
+
+    /* Architecture Flow */
+    .arch-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+
+    .step-node {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 80px 1fr 180px;
+      align-items: center;
+      gap: 1.5rem;
+      backdrop-filter: blur(12px);
+    }
+
+    @media (max-width: 768px) {
+      .step-node {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+    }
+
+    .step-number {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: rgba(255, 107, 53, 0.1);
+      border: 1px solid rgba(255, 107, 53, 0.25);
+      border-radius: 8px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-info h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: #fff;
+    }
+
+    .step-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .step-tag {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.08);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 242, 254, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .step-tag {
+        text-align: left;
+        display: inline-block;
+      }
+    }
+
+    /* Comparison Table */
+    .table-container {
+      overflow-x: auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      margin-bottom: 4rem;
+      backdrop-filter: blur(12px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-ok {
+      color: var(--accent-green);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .badge-no {
+      color: #ef4444;
+      font-weight: 600;
+    }
+
+    /* Code Snippet Box */
+    .code-box {
+      background: #000;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-box pre {
+      margin: 0;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      background: rgba(7, 9, 14, 0.9);
+    }
+
+    footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <span>⚡ FPGA Multilingual AI</span>
+        <span class="brand-badge">PYNQ-Z2</span>
+      </div>
+      <div class="nav-links">
+        <a href="#demo">Live Demo</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#benchmarks">Benchmarks</a>
+        <a id="repoLink" href="https://github.com/jaganbala2007" target="_blank" class="btn-github">
+          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="badge-strip">
+        <span>🚀 100% Offline Voice-to-Voice AI • Xilinx PYNQ-Z2</span>
+      </div>
+      <h1>Hardware-Accelerated <br><span class="gradient-highlight">Multilingual AI Receptionist</span></h1>
+      <p class="hero-subtitle">
+        Zero cloud latency. Zero API bills. Real-time language identification in English, Hindi, and Tamil using 26 MFCC hardware features, custom Q8.8 fixed-point FPGA accelerator, and local agent reasoning.
+      </p>
+
+      <!-- Animated Voice Orb -->
+      <div class="voice-orb-wrapper">
+        <div class="orb-pulse"></div>
+        <div class="orb-core" id="voiceOrb" title="FPGA Neural Processing Core">
+          <span class="orb-icon">🎙️</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Metrics Grid -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value accent-cyan">98.17%</div>
+        <div class="stat-label">Model Test Accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value accent-orange">0.42 ms</div>
+        <div class="stat-label">FPGA Inference Latency</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value accent-green">0.00 $</div>
+        <div class="stat-label">Cloud API Cost (100% Local)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">3 Langs</div>
+        <div class="stat-label">English • Hindi • Tamil</div>
+      </div>
+    </section>
+
+    <!-- Interactive Audio & Simulation Demo -->
+    <section id="demo" style="margin-bottom: 4rem;">
+      <h2 class="section-title">🎧 Interactive Speech & Classifier Demo</h2>
+      <p class="section-desc">Listen to real visitor audio recordings and inspect real-time FPGA feature extraction and response generation.</p>
+
+      <div class="demo-grid">
+        <!-- Sample List -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3><span>📂 Visitor Audio Inputs</span></h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Select sample below</span>
+          </div>
+
+          <!-- English Sample -->
+          <div class="sample-item active" onclick="selectSample('en', 'Where is the computer science department?', 'demo_en_engineering.mp3', 'English', '99.4%', '0.42 ms', 'The Computer Science & Engineering department is located in the Engineering Block, 2nd Floor, Room 204.', 'English')">
+            <div class="sample-top">
+              <span class="sample-lang lang-en">English</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">16 kHz Mono</span>
+            </div>
+            <div class="sample-text">"Where is the computer science department?"</div>
+            <div class="audio-player-row">
+              <audio controls src="audio/demo_en_engineering.mp3"></audio>
+            </div>
+          </div>
+
+          <!-- Hindi Sample -->
+          <div class="sample-item" onclick="selectSample('hi', 'कार्यालय का समय क्या है?', 'demo_hi_hours.mp3', 'Hindi', '98.8%', '0.39 ms', 'कार्यालय का समय सोमवार से शुक्रवार सुबह 9:00 बजे से शाम 5:00 बजे तक है।', 'Hindi')">
+            <div class="sample-top">
+              <span class="sample-lang lang-hi">Hindi</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">16 kHz Mono</span>
+            </div>
+            <div class="sample-text">"कार्यालय का समय क्या है? (What are the office hours?)"</div>
+            <div class="audio-player-row">
+              <audio controls src="audio/demo_hi_hours.mp3"></audio>
+            </div>
+          </div>
+
+          <!-- Tamil Sample -->
+          <div class="sample-item" onclick="selectSample('ta', 'சேர்க்கை அலுவலகம் எங்கு உள்ளது?', 'demo_ta_admissions.mp3', 'Tamil', '99.1%', '0.45 ms', 'சேர்க்கை அலுவலகம் முதன்மை நிர்வாக கட்டிடத்தின் தரைத்தளத்தில் உள்ளது.', 'Tamil')">
+            <div class="sample-top">
+              <span class="sample-lang lang-ta">Tamil</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">16 kHz Mono</span>
+            </div>
+            <div class="sample-text">"சேர்க்கை அலுவலகம் எங்கு உள்ளது? (Where is the admissions office?)"</div>
+            <div class="audio-player-row">
+              <audio controls src="audio/demo_ta_admissions.mp3"></audio>
+            </div>
+          </div>
+        </div>
+
+        <!-- Realtime Telemetry Display -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3><span>⚡ FPGA Live Telemetry & Response</span></h3>
+            <span class="step-tag">AXI4-Lite MMIO</span>
+          </div>
+
+          <div class="telemetry-card">
+            <div class="telemetry-row">
+              <span class="telemetry-key">CLASSIFIED LANGUAGE</span>
+              <span class="telemetry-val highlight-green" id="teleLang">English</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">CLASSIFIER CONFIDENCE</span>
+              <span class="telemetry-val" id="teleConf">99.4%</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">HARDWARE LATENCY</span>
+              <span class="telemetry-val" id="teleLatency">0.42 ms (PYNQ-Z2)</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">FEATURE VECTOR</span>
+              <span class="telemetry-val">26 MFCCs (13 Mean + 13 Std)</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">ARITHMETIC ACCELERATOR</span>
+              <span class="telemetry-val">Signed Q8.8 Fixed-Point ALU</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-muted);">Grounded Agent Answer (Offline Voice Engine):</h4>
+            <div style="background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--accent-cyan); padding: 1rem; border-radius: 6px; font-size: 0.95rem;" id="agentResponse">
+              "The Computer Science & Engineering department is located in the Engineering Block, 2nd Floor, Room 204."
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" style="margin-bottom: 4rem;">
+      <h2 class="section-title">🔬 Complete 100% Offline Hardware Architecture</h2>
+      <p class="section-desc">From physical sound waves to synthesized multilingual voice with zero cloud dependency.</p>
+
+      <div class="arch-flow">
+        <div class="step-node">
+          <div class="step-number">01</div>
+          <div class="step-info">
+            <h4>Audio Preprocessing & 26 MFCC Extraction</h4>
+            <p>16 kHz Mono Audio is split into 25ms windows with 10ms hops. Computes 13 MFCC coefficients (Mean + Standard Deviation = 26 features).</p>
+          </div>
+          <div class="step-tag">10-Step DSP Pipeline</div>
+        </div>
+
+        <div class="step-node">
+          <div class="step-number">02</div>
+          <div class="step-info">
+            <h4>PYNQ-Z2 FPGA Neural Network Accelerator</h4>
+            <p>Memory-mapped AXI4-Lite registers (`0x43C00000`). Synthesizable Verilog MLP executes Q8.8 matrix multiplications in hardware.</p>
+          </div>
+          <div class="step-tag">0.42 ms Latency</div>
+        </div>
+
+        <div class="step-node">
+          <div class="step-number">03</div>
+          <div class="step-info">
+            <h4>Local Speech-to-Text (ASR)</h4>
+            <p>Faster-Whisper (quantized INT8 CTranslate2) generates precise transcripts directly in native English, Hindi, and Tamil scripts.</p>
+          </div>
+          <div class="step-tag">Offline Whisper</div>
+        </div>
+
+        <div class="step-node">
+          <div class="step-number">04</div>
+          <div class="step-info">
+            <h4>Plan-Act-Verify Agent Reasoning</h4>
+            <p>Deterministic local knowledge engine + local Ollama LLM verifies institutional facts with strict bounds before replying.</p>
+          </div>
+          <div class="step-tag">Deterministic Guardrails</div>
+        </div>
+
+        <div class="step-node">
+          <div class="step-number">05</div>
+          <div class="step-info">
+            <h4>Local Text-to-Speech (TTS)</h4>
+            <p>Native Windows SAPI5 (pyttsx3) and Piper local neural voices produce natural synthesized voice audio without internet.</p>
+          </div>
+          <div class="step-tag">Zero Cloud Overhead</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benchmarks Comparison -->
+    <section id="benchmarks" style="margin-bottom: 4rem;">
+      <h2 class="section-title">📊 Inference Backend Comparison</h2>
+      <p class="section-desc">Performance, accuracy, and operational differences across execution targets.</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Target Backend</th>
+              <th>Hardware Target</th>
+              <th>Latency</th>
+              <th>Quantization</th>
+              <th>Network Required</th>
+              <th>100% Offline</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Physical FPGA</strong></td>
+              <td>Xilinx PYNQ-Z2 (Zynq-7020)</td>
+              <td><span style="color: var(--primary); font-weight: 700;">0.42 ms</span></td>
+              <td>Q8.8 Fixed-Point</td>
+              <td><span class="badge-no">None</span></td>
+              <td><span class="badge-ok">✓ Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Simulated FPGA</strong></td>
+              <td>Any Host CPU (Bit-Accurate)</td>
+              <td>1.18 ms</td>
+              <td>Q8.8 Fixed-Point</td>
+              <td><span class="badge-no">None</span></td>
+              <td><span class="badge-ok">✓ Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Scikit-Learn CPU</strong></td>
+              <td>Any Host CPU (Float32)</td>
+              <td>2.15 ms</td>
+              <td>Float32</td>
+              <td><span class="badge-no">None</span></td>
+              <td><span class="badge-ok">✓ Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cloud APIs (OpenAI / Google)</strong></td>
+              <td>Remote Cloud Servers</td>
+              <td>350 - 1800 ms</td>
+              <td>Float16</td>
+              <td><span class="badge-no">Mandatory</span></td>
+              <td><span class="badge-no">✗ No (Fails Offline)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Run Locally / Deployment -->
+    <section style="margin-bottom: 4rem;">
+      <h2 class="section-title">💻 Running Locally</h2>
+      <p class="section-desc">Launch the full Streamlit dashboard or CLI receptionist on Windows or Linux with one command.</p>
+
+      <div class="code-box">
+        <pre><code># 1. Clone the repository
+git clone https://github.com/jaganbala2007/language-fpga.git
+cd language-fpga
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Launch Voice-First Web Application (Streamlit)
+streamlit run app.py
+# Opens at http://localhost:8501</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 FPGA-Based Multilingual AI Receptionist • Developed by <a href="https://github.com/jaganbala2007" target="_blank">jaganbala2007</a></p>
+    <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #6b7280;">Built with Verilog RTL, Xilinx Vivado, Python, Streamlit, and Faster-Whisper</p>
+  </footer>
+
+  <script>
+    function selectSample(lang, query, audioSrc, langName, confidence, latency, response, script) {
+      document.getElementById('teleLang').textContent = langName;
+      document.getElementById('teleConf').textContent = confidence;
+      document.getElementById('teleLatency').textContent = latency + ' (PYNQ-Z2)';
+      document.getElementById('agentResponse').textContent = '"' + response + '"';
+      
+      const items = document.querySelectorAll('.sample-item');
+      items.forEach(el => el.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      const orb = document.getElementById('voiceOrb');
+      orb.style.transform = 'scale(1.2)';
+      setTimeout(() => { orb.style.transform = 'scale(1)'; }, 500);
+    }
+  </script>
+</body>
+</html>

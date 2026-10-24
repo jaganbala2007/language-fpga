@@ -1,0 +1,45 @@
+# ==============================================================================
+# Git Ignore for FPGA Multilingual AI Receptionist
+# ==============================================================================
+
+# Virtual Environments (Prevent pushing gigabytes of site-packages)
+.venv/
+venv/
+ENV/
+env/
+FPGA_Multilingual_Receptionist/venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+.pytest_cache/
+
+# Local Environment Variables & Secrets
+.env
+.env.local
+
+# Runtime Audio & Output Cache
+audio_cache/
+Recording.m4a
+Recording.wav
+
+# Model Binaries & Weight Checkpoints (exceeds GitHub 100MB limit)
+# Note: Whisper models are automatically downloaded on first run via src/offline_asr.py
+models/
+*.bin
+
+# Large Backup Archives (>100MB limit on GitHub)
+FPGA_Multilingual_Receptionist.zip
+Awesome-Multilingual-LLM-master.zip
+sarvam.ai-master.zip
+
+# Redundant duplicate backup folders
+FPGA_Multilingual_Receptionist/
+backup_original/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+desktop.ini

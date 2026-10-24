@@ -1,0 +1,90 @@
+{
+  "facility_name": "Smart Tech Innovation Center",
+  "office_hours": {
+    "weekdays": "9:00 AM to 6:00 PM (Monday to Friday)",
+    "saturday": "9:00 AM to 1:00 PM",
+    "sunday": "Closed"
+  },
+  "departments": {
+    "engineering": {
+      "name": "Engineering & FPGA Lab",
+      "floor": "3rd Floor",
+      "room": "Room 304",
+      "contact": "ext. 401",
+      "lead": "Dr. Ramesh Kumar"
+    },
+    "human_resources": {
+      "name": "Human Resources (HR)",
+      "floor": "2nd Floor",
+      "room": "Room 201",
+      "contact": "ext. 205",
+      "lead": "Ms. Priya Sharma"
+    },
+    "admissions": {
+      "name": "Admissions & Student Affairs",
+      "floor": "Ground Floor",
+      "room": "Room G-12",
+      "contact": "ext. 102",
+      "lead": "Mr. Anand Venkat"
+    },
+    "finance": {
+      "name": "Accounts & Finance",
+      "floor": "1st Floor",
+      "room": "Room 105",
+      "contact": "ext. 303",
+      "lead": "Mr. Rajesh Gupta"
+    },
+    "cafeteria": {
+      "name": "Cafeteria & Refreshments",
+      "floor": "Ground Floor (East Wing)",
+      "room": "Dining Hall",
+      "contact": "ext. 199",
+      "lead": "Campus Dining"
+    },
+    "visitor_lounge": {
+      "name": "Visitor Lounge & Reception",
+      "floor": "Main Lobby",
+      "room": "Reception Desk A",
+      "contact": "ext. 100",
+      "lead": "Front Desk Reception"
+    }
+  },
+  "responses": {
+    "English": {
+      "greeting": "Hello and welcome to the Smart Tech Innovation Center! I am your AI receptionist. How may I assist you today?",
+      "hours": "Our office hours are Monday through Friday from 9:00 AM to 6:00 PM, and Saturdays from 9:00 AM to 1:00 PM. We are closed on Sundays.",
+      "departments": "We have the Engineering & FPGA Lab on the 3rd Floor, HR on the 2nd Floor, Finance on the 1st Floor, and Admissions on the Ground Floor.",
+      "directions_engineering": "To reach the Engineering & FPGA Lab, take the elevator to the 3rd Floor and proceed to Room 304.",
+      "directions_hr": "The Human Resources department is located on the 2nd Floor, Room 201.",
+      "directions_admissions": "The Admissions Office is on the Ground Floor, Room G-12, right next to the main corridor.",
+      "visitor_checkin": "To check in, please show your identity card at the security counter in the lobby to receive your visitor badge.",
+      "appointment": "If you have a scheduled appointment, please mention the host's name or department, and I will notify them of your arrival.",
+      "clarification": "I did not catch that clearly. Could you please repeat your question or state the department you wish to visit?",
+      "default": "Thank you for reaching out. Please visit our front desk in the main lobby or call extension 100 for further assistance."
+    },
+    "Hindi": {
+      "greeting": "नमस्ते! स्मार्ट टेक इनोवेशन सेंटर में आपका स्वागत है। मैं आपकी एआई रिसेप्शनिस्ट हूँ। आज मैं आपकी क्या सहायता कर सकती हूँ?",
+      "hours": "हमारे कार्यालय का समय सोमवार से शुक्रवार सुबह 9:00 बजे से शाम 6:00 बजे तक है, और शनिवार को सुबह 9:00 बजे से दोपहर 1:00 बजे तक है। रविवार को कार्यालय बंद रहता है।",
+      "departments": "हमारे पास तीसरी मंजिल पर इंजीनियरिंग और एफपीजीए लैब, दूसरी मंजिल पर मानव संसाधन (एचआर), पहली मंजिल पर वित्त, और भूतल पर प्रवेश विभाग है।",
+      "directions_engineering": "इंजीनियरिंग और एफपीजीए लैब तक पहुँचने के लिए, कृपया लिफ्ट से तीसरी मंजिल पर जाएं, कमरा नंबर 304।",
+      "directions_hr": "मानव संसाधन विभाग दूसरी मंजिल, कमरा 201 में स्थित है।",
+      "directions_admissions": "प्रवेश कार्यालय भूतल पर मुख्य गलियारे के पास कमरा G-12 में है।",
+      "visitor_checkin": "विज़िटर चेक-इन के लिए, कृपया लॉबी में सुरक्षा काउंटर पर अपना पहचान पत्र दिखाएं और विज़िटर पास प्राप्त करें।",
+      "appointment": "यदि आपका कोई पूर्व निर्धारित अपॉइंटमेंट है, तो कृपया अधिकारी या विभाग का नाम बताएं, हम उन्हें सूचित कर देंगे।",
+      "clarification": "माफ़ कीजिए, मैं आपकी बात स्पष्ट रूप से नहीं सुन पाई। क्या आप कृपया अपनी बात दोहरा सकते हैं?",
+      "default": "धन्यवाद! अधिक सहायता के लिए कृपया मुख्य लॉबी में स्वागत कक्ष से संपर्क करें या एक्सटेंशन 100 डायल करें।"
+    },
+    "Tamil": {
+      "greeting": "வணக்கம்! ஸ்மார்ட் டெக் கண்டுபிடிப்பு மையத்திற்கு உங்களை அன்புடன் வரவேற்கிறோம். நான் உங்கள் செயற்கை நுண்ணறிவு வரவேற்பாளர். இன்று நான் உங்களுக்கு எவ்வாறு உதவ முடியும்?",
+      "hours": "எங்கள் அலுவலகம் திங்கள் முதல் வெள்ளி வரை காலை 9:00 மணி முதல் மாலை 6:00 மணி வரையிலும், சனிக்கிழமைகளில் காலை 9:00 மணி முதல் மதியம் 1:00 மணி வரையிலும் இயங்கும். ஞாயிற்றுக்கிழமை விடுமுறை.",
+      "departments": "3-வது தளத்தில் பொறியியல் மற்றும் FPGA ஆய்வகம், 2-வது தளத்தில் மனிதவள மேம்பாட்டுத் துறை (HR), 1-வது தளத்தில் நிதித் துறை, மற்றும் தரைத்தளத்தில் சேர்க்கை பிரிவு உள்ளன.",
+      "directions_engineering": "பொறியியல் மற்றும் FPGA ஆய்வகத்திற்குச் செல்ல, மின்தூக்கி (Elevator) மூலம் 3-வது தளத்தில் உள்ள அறை எண் 304-க்குச் செல்லவும்.",
+      "directions_hr": "மனிதவளத் துறை (HR) 2-வது தளம், அறை எண் 201-ல் அமைந்துள்ளது.",
+      "directions_admissions": "சேர்க்கை பிரிவு (Admissions) தரைத்தளத்தில் உள்ள அறை எண் G-12-ல் உள்ளது.",
+      "visitor_checkin": "பார்வையாளர் பதிவிற்கு, வரவேற்பு பகுதியில் உள்ள பாதுகாப்பு கவுண்டரில் அடையாள அட்டையைக் காண்பித்து அனுமதி அட்டையைப் பெற்றுக்கொள்ளவும்.",
+      "appointment": "உங்களுக்கு முன்பதிவு செய்யப்பட்ட சந்திப்பு இருந்தால், நீங்கள் சந்திக்க வேண்டியவரின் பெயரைத் தெரிவிக்கவும், நாங்கள் அவர்களுக்குத் தகவல் தருகிறோம்.",
+      "clarification": "மன்னிக்கவும், தங்களது குரல் தெளிவாகக் கேட்கவில்லை. தயவுசெய்து உங்கள் கேள்வியை மீண்டும் கூற முடியுமா?",
+      "default": "தொடர்பு கொண்டதற்கு நன்றி. மேலும் உதவிக்கு வரவேற்பு மேசையை அணுகவும் அல்லது எண் 100-ஐ அழைக்கவும்."
+    }
+  }
+}
